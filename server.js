@@ -1,6 +1,6 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const scrape = require('./scrapeQuote.js');
+const scrapeList = require('./scrapeList.js');
 const fs = require('fs');
 const http = require('http');
 const express = require('express');
@@ -13,13 +13,20 @@ app.listen(port, () => {
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 /*---------------  Web Scraper  ---------------*/
-// Get current equity data
-app.get('/api/scrape', cors(), (req, res) => {
-  scrape(req.query.symbol).then((value) => {
-    res.send(value);
+// Get current list
+app.get('/api/scrapeList', cors(), (req, res) => {
+  scrapeList().then((result) => {
+    res.send(result);
+  });
+});
+
+// Get current list
+app.get('/api/scrapeTest', cors(), (req, res) => {
+  scrapeTest().then((result) => {
+    res.send(result);
   });
 });
 
